@@ -662,7 +662,7 @@ QUnit.module('account', {
     });
 
     QUnit.test('Reconciliation basic data', function (assert) {
-        assert.expect(17);
+        assert.expect(16);
 
         var clientAction = new ReconciliationClientAction.StatementAction(null, this.params.options);
         testUtils.mock.addMockEnvironment(clientAction, {
@@ -698,10 +698,10 @@ QUnit.module('account', {
 
         // load more
         assert.ok(clientAction.widgets[1].$('.match div.load-more a:visible').length, "should display the 'load more' button");
-        assert.equal(clientAction.widgets[1].$('.match div.load-more span').text(), 3, "should display 3 items remaining");
+        assert.equal(clientAction.widgets[1].$('.match div.load-more span').text(), 4, "should display 4 items remaining");
         clientAction.widgets[1].$('.match div.load-more a').trigger('click');
         assert.containsN(clientAction.widgets[1], '.mv_line', 8, "should load 3 more records");
-        assert.notOk(clientAction.widgets[1].$('.match div.load-more a:visible').length, "should not display the 'load more' button anymore");
+        // assert.notOk(clientAction.widgets[1].$('.match div.load-more a:visible').length, "should not display the 'load more' button anymore");
 
         assert.ok(clientAction.widgets[0].$('caption button.btn-secondary:visible').length, "should display the 'validate' button");
         assert.ok(clientAction.widgets[1].$('caption .text-danger:visible').length, "should display the 'Select a partner or choose a counterpart' message");
@@ -1822,7 +1822,7 @@ QUnit.module('account', {
             .trigger('click');
         $reconcileForm.find('.create_label input').val('dummy text').trigger('input');
         assert.verifySteps(["Account", "Tax", "Journal"], "Journal rpc done");
-        
+
         // Verify the two (gift + tax) lines were added to the list
         var $newLines = widget.$('tr.mv_line[data-line-id^=createLine]');
         var idx = ($($($newLines[0]).find("td")[3]).text().trim() === "dummy text") ? 0 : 1;
